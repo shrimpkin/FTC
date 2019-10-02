@@ -1,0 +1,41 @@
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import java.lang.Math;
+
+@TeleOp
+public class ArmControls extends OpMode {
+    private DcMotorController dc_motor;
+    private DcMotor frontLeftWheel;
+    private DcMotor backLeftWheel;
+    private DcMotor frontRightWheel;
+    private DcMotor backRightWheel;
+      private DcMotor frontMotorLeft;
+    private DcMotor frontMotorRight;
+    private boolean MotorOn;
+    private String log = "hello, arm in action";
+    
+    @Override
+    public void init() {
+        frontMotorLeft = hardwareMap.dcMotor.get("frontMotorLeft");
+         frontMotorRight = hardwareMap.dcMotor.get("frontMotorRight");
+    }
+    
+    @Override
+    public void loop() {
+        //Accessing Gamepad joystick 
+         float left_joystike_y = gamepad1.left_stick_y;
+        // float left_joystike_x = gamepad1.left_stick_x;
+       
+       frontMotorLeft.setPower(left_joystike_y);
+       telemetry.addData("joy data",left_joystike_y );
+       // arm_upperMotor.setPower(left_joystike_y);
+          
+     
+    
+  
+    } 
+ 
+  
+}

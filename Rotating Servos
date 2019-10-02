@@ -1,0 +1,55 @@
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import java.lang.Math;
+
+@Autonomous
+public class RotatingServos extends OpMode {
+    private DcMotorController dc_motor;
+    private DcMotor frontLeftWheel;
+    private DcMotor backLeftWheel;
+    private DcMotor frontRightWheel;
+    private DcMotor backRightWheel;
+    private DcMotor frontMotorLeft;
+    private DcMotor frontMotorRight;
+    private boolean MotorOn;
+    private String log = "hello, arm in action";
+    
+    Servo servo;
+    double servoPosition = 0.0;
+    
+    @Override
+    public void init() {
+       frontMotorLeft = hardwareMap.dcMotor.get("frontMotorLeft");
+        frontMotorRight = hardwareMap.dcMotor.get("frontMotorRight");
+        
+        
+    }
+    
+    @Override
+    public void loop() {
+        //Accessing Gamepad joystick 
+         float left_joystike_y = gamepad1.left_stick_y;
+         
+         servo = hardwareMap.servo.get("servo");
+        servo.setPosition(servoPosition);
+        
+        servoPosition = 0.5;
+        servo.setPosition(servoPosition);
+        //sleep(2000);
+        
+        servoPosition = 1.0;
+        servo.setPosition(servoPosition);
+        
+      telemetry.addData("Out put"   , log);
+    //     if(servo){
+           
+    //   }
+  
+     } 
+ 
+  
+}

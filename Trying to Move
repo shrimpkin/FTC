@@ -1,0 +1,135 @@
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import java.lang.Math;
+//import com.qualcomm.ftccommon.DbgLog;
+@TeleOp
+
+public class TryingToMove extends OpMode {
+    private DcMotorController dc_motor;
+    private DcMotor frontLeftWheel;
+    private DcMotor backLeftWheel;
+    private DcMotor frontRightWheel;
+    private DcMotor backRightWheel;
+    private DcMotor frontMotorLeft;
+    private DcMotor frontMotorRight;
+   // private DcMotor clampMotor;
+    private boolean MotorOn;
+    
+    @Override
+    public void init() {
+ 
+        frontLeftWheel = hardwareMap.dcMotor.get("frontLeft");
+        backRightWheel = hardwareMap.dcMotor.get("backRight");
+        frontRightWheel = hardwareMap.dcMotor.get("frontRight");
+        backLeftWheel =  hardwareMap.dcMotor.get("backLeft");
+        MotorOn = false;
+        frontMotorLeft = hardwareMap.dcMotor.get("frontMotorLeft");
+        frontMotorRight = hardwareMap.dcMotor.get("frontMotorRight");
+        
+        
+    }
+    
+    @Override
+    public void loop() {
+      System.out.println("Am printing...");
+        //getting horiz position of the right joystick
+        float clockwise = gamepad1.left_stick_x;
+       
+       //getting vertical position of joystick
+        float right = gamepad1.left_stick_y;
+        
+        //getting horiz position of right joystick
+        float forward = -gamepad1.right_stick_x;
+
+        boolean motin = gamepad2.x;
+        boolean motin2 = gamepad2.y;
+        boolean motin3 = gamepad2.b;
+        
+        
+        //Doing the math to find the power value we need to set
+        float temp = (float) (forward* (Math.cos(clockwise)) + right* (Math.sin(clockwise)));
+         right = (float) ( -forward* (Math.sin(clockwise)) + right*(Math.cos(clockwise)));
+         forward = (float) temp; 
+        
+        float front_left = forward + clockwise + right;
+        float front_right = forward - clockwise - right;
+        float rear_left = forward + clockwise - right;
+        float rear_right = forward - clockwise + right;
+        
+        //only works if you are holding  x
+        //slow and jerky
+        //controls block sucker
+        
+        // if(motin) {
+        //      frontMotorLeft.setPower(1);
+        //      frontMotorRight.setPower(1);
+        //  }
+        
+        //  if(motin2) {
+        //     frontMotorLeft.setPower(0);
+        //     frontMotorRight.setPower(0);
+        // }
+        // if(motin3) {
+        //     frontMotorLeft.setPower(-1);
+        //     frontMotorRight.setPower(-1);
+        //  }
+
+//------------------------------------------
+
+        // if((motin) && MotorOn == false){
+        //     MotorOn = true;
+        //      frontMotorLeft.setPower(1);
+        //      frontMotorRight.setPower(1);
+             
+        // } else if((motin) && MotorOn == true){
+        //      MotorOn = false;
+        //      frontMotorLeft.setPower(0);
+        //      frontMotorRight.setPower(0);
+
+        // }up
+        
+        // if ((motin3) && MotorOn == false) {
+        //     MotorOn = true;
+        //     frontMotorLeft.setPower(1);
+        //      frontMotorRight.setPower(1);
+        //      DbgLog.msg("B is clicked");
+             
+             
+        // } else if((motin) && MotorOn == true){
+        //      MotorOn = false;
+        //      frontMotorLeft.setPower(0);
+        //      frontMotorRight.setPower(0);
+        //      DbgLog.msg("B is clicked again");
+        // }
+        
+        //-----------------------------------------------
+  
+        //###############
+        
+         if(front_right > 1){
+            front_right= 1;
+        } else if(front_right < -1) {
+            front_right = -1;
+        }
+        
+          if(rear_left > 1){
+            rear_left= 1;
+        } else if(front_right < -1) {
+            rear_left = -1;
+        }
+        
+          if(rear_right> 1){
+            rear_right= 1;
+        } else if(rear_right < -1) {
+            rear_right = -1;
+        }
+        //-------------------------------------
+        frontLeftWheel.setPower(front_left);
+        backLeftWheel.setPower(front_right);
+        frontRightWheel.setPower(rear_left);
+        backRightWheel.setPower(rear_right);
+    }
+    // todo: write your code here
+}

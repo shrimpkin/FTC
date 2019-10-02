@@ -1,0 +1,38 @@
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import java.lang.Math;
+
+@TeleOp
+public class DriveControls extends OpMode {
+    private DcMotorController dc_motor;
+    private DcMotor frontLeftWheel;
+    private DcMotor backLeftWheel;
+    private DcMotor frontRightWheel;
+    private DcMotor backRightWheel;
+    private DcMotor frontMotorLeft;
+    private DcMotor frontMotorRight;
+    private boolean MotorOn;
+    private String log = "hello";
+    
+    @Override
+    public void init() {
+        MotorOn = false;
+        frontLeftWheel = hardwareMap.dcMotor.get("frontLeft");
+        backRightWheel = hardwareMap.dcMotor.get("backRight");
+        frontRightWheel = hardwareMap.dcMotor.get("frontRight");
+        backLeftWheel =  hardwareMap.dcMotor.get("backLeft");
+        frontMotorLeft = hardwareMap.dcMotor.get("frontMotorLeft");
+        frontMotorRight = hardwareMap.dcMotor.get("frontMotorRight");
+        
+        
+    }
+    
+    @Override
+    public void loop() {
+       telemetry.addData("Out put"   , log);
+    } 
+ 
+  
+}

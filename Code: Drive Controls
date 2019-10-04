@@ -14,11 +14,14 @@ public class DriveControls extends OpMode {
     private DcMotor frontMotorLeft;
     private DcMotor frontMotorRight;
     private boolean MotorOn;
-    private String log = "hello";
+    
+    private String log = "Fields Initialized";
     
     @Override
     public void init() {
         MotorOn = false;
+        
+        //maps each dcMotor to the corresponding name listed on the "Configure Robot"
         frontLeftWheel = hardwareMap.dcMotor.get("frontLeft");
         backRightWheel = hardwareMap.dcMotor.get("backRight");
         frontRightWheel = hardwareMap.dcMotor.get("frontRight");
@@ -27,11 +30,60 @@ public class DriveControls extends OpMode {
         frontMotorRight = hardwareMap.dcMotor.get("frontMotorRight");
         
         
+        log = "hardwareMapped";
+        telemetry.addData("Out put, log);
     }
     
     @Override
     public void loop() {
-       telemetry.addData("Out put"   , log);
+        // The following allows for controlling mechanm wheels
+        
+        //getting horizontal position of left joystick
+         float clockwise = gamepad1.left_stick_x;
+       
+       //getting vertical position of left joystick
+        float right = gamepad1.left_stick_y;
+        
+        //getting horiz position of right joystick
+        float forward = -gamepad1.right_stick_x;
+        
+        //Doing the math to find the power value we need to set
+        float temp = (float) (forward* (Math.cos(clockwise)) + right* (Math.sin(clockwise)));
+         right = (float) ( -forward* (Math.sin(clockwise)) + right*(Math.cos(clockwise)));
+         forward = (float) temp; 
+        
+        //Finding power value for each wheel
+        float front_left = forward + clockwise + right;
+        float front_right = forward - clockwise - right;
+        float rear_left = forward + clockwise - right;
+        float rear_right = forward - clockwise + right;
+    
+    
+        //Making sure each wheel has a power value no more than 1 or less than -1
+         if(front_right > 1){
+            front_right= 1;
+        } else if(front_right < -1) {
+            front_right = -1;
+        }
+        
+          if(rear_left > 1){
+            rear_left= 1;
+        } else if(front_right < -1) {
+            rear_left = -1;
+        }
+        
+          if(rear_right> 1){
+            rear_right= 1;
+        } else if(rear_right < -1) {
+            rear_right = -1;
+        }
+
+        //Assigns power value to each wheel
+        frontLeftWheel.setPower(front_left);
+        backLeftWheel.setPower(front_right);
+        frontRightWheel.setPower(rear_left);
+        backRightWheel.setPower(rear_right);
+    
     } 
  
   

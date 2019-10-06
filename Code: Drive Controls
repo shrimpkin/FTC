@@ -19,7 +19,7 @@ public class DriveControls extends OpMode {
     
     @Override
     public void init() {
-        MotorOn = false;
+        telemetry.addDate("Out put", log);
         
         //maps each dcMotor to the corresponding name listed on the "Configure Robot"
         frontLeftWheel = hardwareMap.dcMotor.get("frontLeft");
@@ -29,7 +29,8 @@ public class DriveControls extends OpMode {
         frontMotorLeft = hardwareMap.dcMotor.get("frontMotorLeft");
         frontMotorRight = hardwareMap.dcMotor.get("frontMotorRight");
         
-        
+        //allows for five messages to be stored
+        telemetry.setCapacity(5);
         log = "hardwareMapped";
         telemetry.addData("Out put, log);
     }
@@ -77,7 +78,12 @@ public class DriveControls extends OpMode {
         } else if(rear_right < -1) {
             rear_right = -1;
         }
-
+        
+        if(! log.equals("Power Assigned") {
+            log = "Power Assigned";
+            telemetry.addDate("Out put", log);
+        }
+        
         //Assigns power value to each wheel
         frontLeftWheel.setPower(front_left);
         backLeftWheel.setPower(front_right);

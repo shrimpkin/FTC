@@ -17,6 +17,8 @@ public class TryingToMove extends OpMode {
    // private DcMotor clampMotor;
     private boolean MotorOn;
     
+    private String log = "";
+    
     @Override
     public void init() {
  
@@ -28,12 +30,15 @@ public class TryingToMove extends OpMode {
         frontMotorLeft = hardwareMap.dcMotor.get("frontMotorLeft");
         frontMotorRight = hardwareMap.dcMotor.get("frontMotorRight");
         
+        log = "fields initialized"
+        
         
     }
     
     @Override
     public void loop() {
-      System.out.println("Am printing...");
+        telemetry.addData("Out put", log);
+        
         //getting horiz position of the right joystick
         float clockwise = gamepad1.left_stick_x;
        
